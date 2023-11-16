@@ -161,21 +161,21 @@ d'abord besoin d'ajouter une nouvelle route. Votre fichier **config/routes.php**
 
     <?php
     use Cake\Routing\Route\DashedRoute;
-    use Cake\Routing\Router;
-
-    Router::defaultRouteClass(DashedRoute::class);
-
+    use Cake\Routing\RouteBuilder;
+    
+    $routes->setRouteClass(DashedRoute::class);
+    
     $routes->scope('/', function (RouteBuilder $builder) {
         $builder->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
         $builder->connect('/pages/*', ['controller' => 'Pages', 'action' => 'display']);
-
+    
         // Ceci est la route à ajouter pour notre nouvelle action.
-        // Le `*` à la fin permet de préciser à CakePHP que cette action
+        // Le '*' à la fin permet de préciser à CakePHP que cette action
         // a des paramètres qui lui seront passés
         $builder->scope('/articles', function (RouteBuilder $builder) {
             $builder->connect('/tagged/*', ['controller' => 'Articles', 'action' => 'tags']);
         });
-
+    
         $builder->fallbacks();
     });
 
